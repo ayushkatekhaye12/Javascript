@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Information</title>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<style>
+body{text-align:center;font-family:Arial;background:#eee}
+.box{background:white;padding:25px;margin:50px auto;width:400px}
+button{padding:10px;margin:5px}
+#output{text-align:left;margin-top:20px}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>🎓 Student Information</h2>
+
+<button id="fetch">Load using fetch()</button>
+<button id="get">Load using $.get()</button>
+
+<div id="output">Click a button</div>
+</div>
+
+<script>
+function show(d,method){
+$("#output").html(`
+<h3>Student Details</h3>
+<b>Name:</b> ${d.name}<br>
+<b>PRN:</b> ${d.prn}<br>
+<b>Course:</b> ${d.course}<br>
+<b>Year:</b> ${d.year}<br>
+<b>College:</b> ${d.college}<br>
+<b>Email:</b> ${d.email}<br>
+<b>Method:</b> ${method}`);
+}
+
+$("#fetch").click(function(){
+fetch("student.json")
+.then(r=>r.json())
+.then(d=>show(d,"fetch()"))
+.catch(()=>$("#output").text("Error loading JSON"));
+});
+
+$("#get").click(function(){
+$.get("student.json",d=>show(d,"$.get()"))
+.fail(()=>$("#output").text("Error loading JSON"));
+});
+</script>
+
+</body>
+</html>
